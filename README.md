@@ -1,5 +1,6 @@
 # pbl.zip
-- ポータブルで動くcloud spiralの演習・開発環境のセットアップ方法
+- ポータブルで動くcloud spiralの演習・開発環境
+- Java, Eclipse全部入り
 
 # 前提
 - win7 or later
