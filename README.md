@@ -43,4 +43,9 @@
 - (why: webrtc:navigator.getUserMediaがchrome v47からhttpsオンリーになったため)
 
 ### Eclipse
+- http://mergedoc.osdn.jp/
+- 4.6 Neon, Pleiades All in One, x64
+- Java → x64 → Standard Edition
+- (why: newest)
+
 ### ssh_key
