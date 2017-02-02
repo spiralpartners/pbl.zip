@@ -1,5 +1,5 @@
-# ’ˆÓ
-# gui_xxx: GUI‚Åˆ—‚·‚é•K—v‚ª‚ ‚é‹^—ƒRƒ}ƒ“ƒh
+# æ³¨æ„
+# gui_xxx: GUIã§å‡¦ç†ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ç–‘ä¼¼ã‚³ãƒãƒ³ãƒ‰
 
 unalias cp
 
@@ -14,12 +14,12 @@ mkdir -p $PBL_HOME
 #########################################
 # JDK
 
-# ƒCƒ“ƒXƒg[ƒ‹
+# ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 cd $TMP
 gui_wget http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-windows-x64.exe
 gui_install jdk-8u121-windows.exe
-# -- ƒCƒ“ƒXƒg[ƒ‹‚ÌJREF•s—v
-# -- ƒCƒ“ƒXƒg[ƒ‹ƒpƒXFƒfƒtƒHƒ‹ƒgiC:\Program Files\Java..j‚Å—Ç‚¢
+# -- ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«æ™‚ã®JREï¼šä¸è¦
+# -- ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ‘ã‚¹ï¼šãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼ˆC:\Program Files\Java..ï¼‰ã§è‰¯ã„
 
 cp -r /c/Program\ Files/Java/jdk1.8.0_121 $PBL_HOME
 mv -f $PBL_HOME/jdk1.8.0_121 $PBL_HOME/java
@@ -29,7 +29,7 @@ mv -f $PBL_HOME/jdk1.8.0_121 $PBL_HOME/java
 #########################################
 # Eclipse
 
-# ƒCƒ“ƒXƒg[ƒ‹
+# ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 cd $TMP
 wget http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.6/pleiades-4.6.2-java-win-64bit_20161221.zip
 unzip pleiades-4.6.2-java-win-64bit_20161221.zip
@@ -38,27 +38,65 @@ mv -f pleiades/eclipse $PBL_HOME/
 
 mkdir $PBL_HOME/workspace
 
+# Javaã®ãƒ‘ã‚¹ã‚’$PBL_HOME/javaã«å›ºå®š
+cp -n eclipse/eclipse.ini eclipse/eclipse.ini.orig
+cp -f eclipse/eclipse.ini.orig eclipse/eclipse.ini
 if ! grep -Fq '^-vmargs$' eclipse/eclipse.ini
 then
-  sed -i 's|\(-product\)|-vm\nC:/pbl/java/bin/javaw.exe\n\1|' eclipse/eclipse.ini
+  _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
+  sed -i 's|\(-product\)|-vm\n'"${_PATH}"'java/bin/javaw.exe\n\1|' eclipse/eclipse.ini
 fi
 
+# ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¯ãƒ¼ã‚¯ã‚¹ãƒšãƒ¼ã‚¹ã‚’$PBL_HOME/workspaceã«å›ºå®š
+cp -n eclipse/configuration/.settings/org.eclipse.ui.ide.prefs eclipse/configuration/.settings/org.eclipse.ui.ide.prefs.orig
+cp -f eclipse/configuration/.settings/org.eclipse.ui.ide.prefs.orig eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+_PATH=$(echo $PBL_HOME'/workspace' | xargs cygpath -w | sed 's|\\|\\\\\\\\|g' | sed 's|:|\\\\:|')
+sed -i 's|^SHOW_WORKSPACE_SELECTION_DIALOG=true|SHOW_WORKSPACE_SELECTION_DIALOG=false|' eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+sed -i 's|^RECENT_WORKSPACES=.*|RECENT_WORKSPACES='"${_PATH}"'|' eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+
+
+# ã‚ˆã†ã“ã
+workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 
 ### utf-8
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
+
 ### font
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs
+
 ### D&D
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs
+
+### spel
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs
+
+### exit confirm
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
+
+### å¸¸ã«ãƒ‘ãƒ¼ã‚¹ãƒšã‚¯ãƒ†ã‚£ãƒ–
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
+
+### ãƒ‘ãƒ¼ã‚¹ãƒšã‚¯ãƒ†ã‚£ãƒ–ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+
+### ã‚ˆã†ã“ã
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs
+
+### èµ·å‹•æ™‚ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³
+workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs
 
 #########################################
 # Tomcat
 
-# ƒCƒ“ƒXƒg[ƒ‹
+# ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 cd $TMP
 wget http://ftp.tsukuba.wide.ad.jp/software/apache/tomcat/tomcat-8/v8.5.11/bin/apache-tomcat-8.5.11.zip
 unzip -o apache-tomcat-8.5.11.zip
 mv apache-tomcat-8.5.11 $PBL_HOME/tomcat
 
 
-# JAVA‚ÌƒpƒX‚ğ$PBL_HOME‚ÉŒÅ’è
+# Javaã®ãƒ‘ã‚¹ã‚’$PBL_HOME/javaã«å›ºå®š
 cd $PBL_HOME
 cp -n tomcat/bin/startup.bat tomcat/bin/startup.bat.orig
 cp -f tomcat/bin/startup.bat.orig tomcat/bin/startup.bat
@@ -82,7 +120,7 @@ gui_install GoogleChromePortable64_46.0.2490.86_online.paf.exe
 # -- Install to $TMP directory from GUI.
 mv -f GoogleChromePortable64 $PBL_HOME/chrome
 
-# •ê‘ŒêˆÈŠO‚Å‚Ì–|–óƒ‚[ƒh‚ğ–³Œø‰»iƒhƒƒbƒvƒ_ƒEƒ“•`‰æ‚ªŠJ”­‚É×–‚‚·‚éj
+# æ¯å›½èªä»¥å¤–ã§ã®ç¿»è¨³ãƒ¢ãƒ¼ãƒ‰ã‚’ç„¡åŠ¹åŒ–ï¼ˆãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³æç”»ãŒé–‹ç™ºæ™‚ã«é‚ªé­”ã™ã‚‹ï¼‰
 cd $PBL_HOME
 gui_exec $PBL_HOME/chrome/GoogleChromePortable.exe
 cp -n chrome/Data/profile/Default/Preferences chrome/Data/profile/Default/Preferences.orig
@@ -95,14 +133,14 @@ fi
 ########################################
 # Mongodb
 
-# ƒCƒ“ƒXƒg[ƒ‹
+# ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 cd $TMP
 wget http://downloads.mongodb.org/win32/mongodb-win32-x86_64-2008plus-3.4.1.zip
 unzip -o mongodb-win32-x86_64-2008plus-3.4.1.zip
 mv -f mongodb-win32-x86_64-2008plus-3.4.1 $PBL_HOME/
 mv $PBL_HOME/mongodb-win32-x86_64-2008plus-3.4.1 $PBL_HOME/mongodb
 
-# ‹N“®‚Ìİ’èiconf‚Ì¶¬‚Æ‚»‚ê‚ğg‚Á‚Ä‹N“®‚·‚ébat‚Ì¶¬j
+# èµ·å‹•æ™‚ã®è¨­å®šï¼ˆconfã®ç”Ÿæˆã¨ãã‚Œã‚’ä½¿ã£ã¦èµ·å‹•ã™ã‚‹batã®ç”Ÿæˆï¼‰
 cd $PBL_HOME
 mkdir -p mongodb/data
 _PATH=$(cygpath -w $PBL_HOME)
@@ -187,3 +225,9 @@ mkdir -p $DIFF/tomcat/bin/ && cp $PBL_HOME/tomcat/bin/startup.bat.orig "$_"
 
 
 
+extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs
+extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs
+extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
+extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs
+extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs
+extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
