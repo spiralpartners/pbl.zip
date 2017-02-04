@@ -1,3 +1,7 @@
+# javaのstatic main()実行時の候補がイマイチ
+- サーバ実行とjava実行の両方が出る
+- 後者だけで十分 
+
 # tomcatユーザーどうする？
 - tomcat-users.xml
 
