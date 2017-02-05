@@ -14,19 +14,57 @@
   - zip自体は巨大なので本リポジトリとは別のファイルサーバに待避
   - http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/
 
+# Release note
+### 1.0
+- http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/pbl_v1.0.zip
+- `2017/02/03`
+- 初期バージョン
 
-# what's pbl.zip?
+# Pendings
+### java実行時の候補
+- javaの`static main()`実行時の候補がイマイチ
+- サーバ実行とjava実行の両方が出る
+- 後者だけで十分
+- 学生が演習時にミスりそう
+
+### tomcatユーザーどうする？
+- `tomcat-users.xml`
+- 現在，alpacaでのbuildデプロイ時に以下コマンドを実行している
+```bash
+cp *.war $PBL_HOME/webapps
+```
+- tomcat api経由でデプロイすべき
+- そうなるとtomcatユーザが必須
+
+
+### httpd必要？
+- httpd-tomcatの謎連携をやめたため，今のところ不要
+- 謎連携はtomcatのみで実現可能
+```xml
+<context path=.. docBase=..>
+```
+
+
+### tomcatのanti*Lockingを外したが問題ないか？
+- tomcat/conf/context.xml内
+```xml
+<Context antiResourceLocking="true" "antiJARLocking="true">
+```
+- 今のところ問題は出ていないが，実際に開発しながら試すべき
+
+
+
+
+# What's pbl.zip?
 - ポータブルで動くcloud spiralの演習・開発環境
 - Java, Eclipse全部入り
 
-### 動作環境
-- win7 or later
-- 64bit
-- 2GB HDD space
-- C:\pbl上でのみ動作
+- 動作環境
+  - win7 or later
+  - 64bit
+  - 2GB HDD space
+  - C:\pbl上でのみ動作
 
-
-# 各種バージョン
 ### JDK
 - 8u121
 - 理由：最新・8系統
