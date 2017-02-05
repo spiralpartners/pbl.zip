@@ -19,9 +19,9 @@ unalias cp
 mkdir -p $PBL_HOME
 
 # 対象ファイルのorigバックアップを生成
-retain(){
-  if [ -f "$*.orig" ] then
-    # origあるなら何もしない
+retain() {
+  if [ -f "$*.orig" ]; then
+    return # origあるなら何もしない
   else
     if [ ! -f "$*" ]; then
       # 元ファイルがなければ空orig
@@ -32,6 +32,7 @@ retain(){
     fi
   fi
 }
+
 
 # 対象ファイルをorigバックアップから復元
 restore() {
@@ -113,6 +114,11 @@ wget http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/workbench.xmi -O $PBL_HOME/w
 # --- https://github.com/spiralpartners/pbl.zipにも同じ内容のファイルあり
 cd $PBL_HOME
 
+# 自動更新をオフ
+cd $PBL_HOME/
+mkdir -p eclipse/p2/org.eclipse.equinox.p2.engine/profileRegistry/epp.package.jee.profile/.data/.settings
+retain_restore eclipse/p2/org.eclipse.equinox.p2.engine/profileRegistry/epp.package.jee.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs
+echo -e 'autoUpdateInit=true\neclipse.preferences.version=1\nenabled=false\nmigrated34Prefs=true' > eclipse/p2/org.eclipse.equinox.p2.engine/profileRegistry/epp.package.jee.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs
 
 #########################################
 # Tomcat
@@ -247,6 +253,7 @@ extract_delta() {
 rm -rf $DELTA
 extract_delta $PBL_HOME/eclipse/eclipse.ini
 extract_delta $PBL_HOME/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+extract_delta $PBL_HOME/eclipse/p2/org.eclipse.equinox.p2.engine/profileRegistry/epp.package.jee.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs
 extract_delta $PBL_HOME/tomcat/bin/startup.bat
 extract_delta $PBL_HOME/mongodb/mongod.conf
 extract_delta $PBL_HOME/mongodb/bin/mongod.bat
