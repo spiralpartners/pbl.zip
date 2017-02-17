@@ -2,14 +2,20 @@
 - pbl.zipの**生成方法**を記載
 - zip自体は別サーバに待避，[release](https://github.com/spiralpartners/pbl.zip/releases)を参照
 
-- setup.sh
-  - pbl.zip生成の全手順を記載したスクリプト
-  - バイナリの取得から，ディレクトリの移動，設定ファイルの書き換え全ての手順が含まれる
-  - guiによる手作業処理も含まれるので全自動ではないことに注意
+- setup-base.sh
+  - pbl.zip生成手順のうち，ベースバイナリの生成手順のスクリプト
+  - 生成結果はこちら
+    - http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/pbl-base.zip
+  - 一部，guiによる手作業処理も含まれるており，全自動ではないことに注意
+
+- setup-conf.sh
+  - ベースバイナリに対して設定を加えるスクリプト
+  - 実行パス（C:\pbl\）の固定や，Eclipseへの設定等が含まれる
+  - pbl.zipの肝
 
 - delta/
-  - 差分となる全ての設定ファイルを保持
-  - 初期状態（orig）との差分を見るとよい
+  - setup-confによる設定とデフォルト設定との差分ファイルを保持
+  - 初期ファイル（.orig）との差分を見るとよい
 
 - pbl.zip
   - zip自体は巨大なので本リポジトリとは別のファイルサーバに待避
