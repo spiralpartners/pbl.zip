@@ -1,5 +1,5 @@
 # このリポジトリは
-- pbl.zipの**生成方法**を記載
+- pbl.zipの*生成方法*を記載
 - zip自体は別サーバに待避，[release](https://github.com/spiralpartners/pbl.zip/releases)を参照
 
 - setup-base.sh
@@ -23,11 +23,12 @@
 
 
 # Pendings
-### java実行時の候補
-- javaの`static main()`実行時の候補がイマイチ
-- サーバ実行とjava実行の両方が出る
-- 後者だけで十分
-- 学生が演習時にミスりそう
+### ~~java実行時の候補~~
+- v1.2 (mergedoc→JEE）により解決
+- ~~javaの`static main()`実行時の候補がイマイチ~~
+- ~~サーバ実行とjava実行の両方が出る~~
+- ~~後者だけで十分~~
+- ~~学生が演習時にミスりそう~~
 
 ### tomcatユーザーどうする？
 - `tomcat-users.xml`
@@ -35,7 +36,6 @@
   - `cp *.war $PBL_HOME/webapps`
 - tomcat api経由でデプロイすべき
 - そうなるとtomcatユーザが必須
-
 
 ### httpd必要？
 - httpd-tomcatの謎連携をやめたため，今のところ不要
