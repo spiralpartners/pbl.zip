@@ -30,6 +30,7 @@ retain() {
   else
     if [ ! -f "$*" ]; then
       # 元ファイルがなければ空orig
+      dirname "$*" | xargs mkdir -p
       touch "$*.orig"
     else
       # 元ファイルあるならコピーorig
@@ -74,8 +75,7 @@ echo -e 'autoUpdateInit=true\neclipse.preferences.version=1\nenabled=false\nmigr
 cd $PBL_HOME/
 retain_restore eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 _PATH=$(echo $PBL_HOME'/workspace' | xargs cygpath -w | sed 's|\\|\\\\\\\\|g' | sed 's|:|\\\\:|')
-sed -i 's|^SHOW_WORKSPACE_SELECTION_DIALOG=true|SHOW_WORKSPACE_SELECTION_DIALOG=false|' eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
-sed -i 's|^RECENT_WORKSPACES=.*|RECENT_WORKSPACES='"${_PATH}"'|' eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+echo -e 'MAX_RECENT_WORKSPACES=10\nRECENT_WORKSPACES='$_PATH'\nRECENT_WORKSPACES_PROTOCOL=3\nSHOW_RECENT_WORKSPACES=false\nSHOW_WORKSPACE_SELECTION_DIALOG=false\neclipse.preferences.version=1' > eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 
 ########################################
 # Eclipse (workspace)
