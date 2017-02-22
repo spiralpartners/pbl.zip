@@ -5,7 +5,7 @@
 - setup-base.sh
   - pbl.zip生成手順のうち，ベースバイナリの生成手順のスクリプト
   - 生成結果はこちら
-    - http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/pbl-base.zip
+    - http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/pbl-base-v0.1.zip
   - 一部，guiによる手作業処理も含まれるており，全自動ではないことに注意
 
 - setup-conf.sh
@@ -57,7 +57,7 @@
 | Software | version | source | memo |
 |--------|---------|--------|------|
 | JDK | 8u121 | [oracle.com](http://www.oracle.com/technetwork/java/javase/downloads/index.html) | x64 |
-| Eclipse | 4.6 Neon, Pleiades | [mergedoc.jp](http://mergedoc.osdn.jp/) | x64 |
+| Eclipse | 4.6.2 Neon 2 | [eclipse.org](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon2) | x64 |
 | Apache Tomcat | 8.5.11 | [apache.org](http://tomcat.apache.org/) | Core → zip |
 | MongoDB | 3.4.1 | [mongodb.com](https://www.mongodb.com/) | w/o SSL support x64 |
 | RLogin | 2.21.3 | [nanno.disp.jp](http://nanno.dip.jp/softlib/man/rlogin/) | x64 |

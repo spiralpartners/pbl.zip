@@ -39,10 +39,16 @@ mv -f $PBL_HOME/jdk1.8.0_121 $PBL_HOME/java
 # Eclipse
 
 cd $TMP
-wget http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.6/pleiades-4.6.2-java-win-64bit_20161221.zip
-unzip pleiades-4.6.2-java-win-64bit_20161221.zip
-mv -f pleiades/eclipse $PBL_HOME/
+wget http://mirrors.opencas.org/eclipse/technology/epp/downloads/release/neon/2/eclipse-jee-neon-2-win32-x86_64.zip
+unzip eclipse-jee-neon-2-win32-x86_64.zip
+mv -f eclipse $PBL_HOME/eclipse
 
+# Pleiades (日本語化)
+cd $TMP
+wget http://svn.osdn.jp/svnroot/mergedoc/trunk/Pleiades/build/pleiades.zip
+unzip pleiades.zip -d pleiades/
+cp -r pleiades/* $PBL_HOME/eclipse/
+rm -rf pleiades
 
 #########################################
 # Tomcat

@@ -65,6 +65,21 @@ retain_restore eclipse/eclipse.ini
 _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
 sed -i 's|\(-product\)|-vm\n'$_PATH'java/bin/javaw.exe\n\1|' eclipse/eclipse.ini
 
+# SVNプラグイン追加 (pleiadesの設定と異存があるのでimmutableなチェック含)
+if grep -Fq "pleiades.jar" eclipse/eclipse.ini
+  then
+    sed -i "/pleiades.jar/d" eclipse/eclipse.ini
+    sed -i "/-Xverify/d" eclipse/eclipse.ini
+fi
+$PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://download.eclipse.org/releases/neon -installIUs org.eclipse.team.svn.feature.group
+$PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://community.polarion.com/projects/subversive/download/eclipse/6.0/neon-site -installIUs org.polarion.eclipse.team.svn.connector.feature.group,org.polarion.eclipse.team.svn.connector.svnkit18.feature.group
+
+# pleiades有効化
+if grep -Fqv "pleiades.jar" eclipse/eclipse.ini
+  then
+    echo -e '-Xverify:none\n-javaagent:plugins/jp.sourceforge.mergedoc.pleiades/pleiades.jar' >> eclipse/eclipse.ini
+fi
+
 # 自動更新をオフ
 cd $PBL_HOME/
 mkdir -p eclipse/p2/org.eclipse.equinox.p2.engine/profileRegistry/epp.package.jee.profile/.data/.settings
@@ -76,6 +91,8 @@ cd $PBL_HOME/
 retain_restore eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 _PATH=$(echo $PBL_HOME'/workspace' | xargs cygpath -w | sed 's|\\|\\\\\\\\|g' | sed 's|:|\\\\:|')
 echo -e 'MAX_RECENT_WORKSPACES=10\nRECENT_WORKSPACES='$_PATH'\nRECENT_WORKSPACES_PROTOCOL=3\nSHOW_RECENT_WORKSPACES=false\nSHOW_WORKSPACE_SELECTION_DIALOG=false\neclipse.preferences.version=1' > eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+
+
 
 ########################################
 # Eclipse (workspace)
