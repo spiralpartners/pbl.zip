@@ -64,6 +64,7 @@ cd $PBL_HOME/
 retain_restore eclipse/eclipse.ini
 _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
 sed -i 's|\(-product\)|-vm\n'$_PATH'java/bin/javaw.exe\n\1|' eclipse/eclipse.ini
+echo -e '-Duser.home=C:/pbl/eclipse' >> eclipse/eclipse.ini
 
 # SVNプラグイン追加 (pleiadesの設定と異存があるのでimmutableなチェック含)
 if grep -Fq "pleiades.jar" eclipse/eclipse.ini
@@ -198,6 +199,7 @@ cleanup_mongodb() {
 cleanup_eclipse() {
   rm -rf $PBL_HOME/eclipse/configuration/*.log
   rm -rf $PBL_HOME/eclipse/p2/org.eclipse.equinox.p2.repository
+  rm -rf $PBL_HOME/eclipse/.eclipse
   find $PBL_HOME/eclipse/configuration -maxdepth 1 -mindepth 1 -type d | egrep -v ".settings|org.eclipse.equinox.simpleconfigurator|org.eclipse.update" | xargs rm -rf
 }
 cleanup() {
