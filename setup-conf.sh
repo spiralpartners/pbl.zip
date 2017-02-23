@@ -64,7 +64,7 @@ cd $PBL_HOME/
 retain_restore eclipse/eclipse.ini
 _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
 sed -i 's|\(-product\)|-vm\n'$_PATH'java/bin/javaw.exe\n\1|' eclipse/eclipse.ini
-echo -e '-Duser.home=C:/pbl/eclipse' >> eclipse/eclipse.ini
+echo -e '-Duser.home=C:/pbl/eclipse/tmp' >> eclipse/eclipse.ini
 
 # SVNプラグイン追加 (pleiadesの設定と異存があるのでimmutableなチェック含)
 if grep -Fq "pleiades.jar" eclipse/eclipse.ini
@@ -146,18 +146,11 @@ sed -b -i 's|setlocal|setlocal\n\nrem [pbl.zip] Fix JDK paths\nset JAVA_HOME='$_
 ########################################
 # chrome
 
-# 設定ファイルの自動生成
-cd $PBL_HOME
-rm -rf chrome/Data/profile
-cygstart $PBL_HOME/chrome/GoogleChromePortable.exe
-sleep 3
-*gui_exit $PBL_HOME/chrome/GoogleChromePortable.exe
-
 # 母国語以外での翻訳モードを無効化（ドロップダウン描画が開発時に邪魔する）
 cd $PBL_HOME
 retain_restore chrome/Data/profile/Default/Preferences
-sed -i 's|\("translate_blocked_languages":[^/]*,\)|"translate":{"enabled":false},\1|' chrome/Data/profile/Default/Preferences
-
+mkdir -p chrome/Data/profile/Default
+echo -e '{\n   "browser":{\n      "check_default_browser":false\n   },\n   "translate":{\n      "enabled":false\n   },\n   "translate_blocked_languages":[\n      "en"\n   ]\n}' > chrome/Data/profile/Default/Preferences
 
 ########################################
 # Mongodb
@@ -199,13 +192,17 @@ cleanup_mongodb() {
 cleanup_eclipse() {
   rm -rf $PBL_HOME/eclipse/configuration/*.log
   rm -rf $PBL_HOME/eclipse/p2/org.eclipse.equinox.p2.repository
-  rm -rf $PBL_HOME/eclipse/.eclipse
+  rm -rf $PBL_HOME/eclipse/tmp/
   find $PBL_HOME/eclipse/configuration -maxdepth 1 -mindepth 1 -type d | egrep -v ".settings|org.eclipse.equinox.simpleconfigurator|org.eclipse.update" | xargs rm -rf
+}
+cleanup_chrome() {
+  rm -rf chrome/Data/profile
 }
 cleanup() {
   cleanup_mongodb
   cleanup_tomcat
   cleanup_eclipse
+  cleanup_chrome
 }
 
 cleanup
