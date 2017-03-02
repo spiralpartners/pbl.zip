@@ -194,12 +194,15 @@ cleanup_mongodb() {
 }
 cleanup_eclipse() {
   rm -rf $PBL_HOME/eclipse/configuration/*.log
+  rm -rf $PBL_HOME/eclipse/configuration/org.eclipse.update/history
   rm -rf $PBL_HOME/eclipse/p2/org.eclipse.equinox.p2.repository
+  rm -rf $PBL_HOME/eclipse/p2/pools.info
+  rm -rf $PBL_HOME/eclipse/p2/profiles.info
   rm -rf $PBL_HOME/eclipse/tmp/
   find $PBL_HOME/eclipse/configuration -maxdepth 1 -mindepth 1 -type d | egrep -v ".settings|org.eclipse.equinox.simpleconfigurator|org.eclipse.update" | xargs rm -rf
 }
 cleanup_chrome() {
-  rm -rf chrome/Data/profile
+  find $PBL_HOME/chrome/Data/profile/ | egrep -v "profile/$|Default$|Default/Preferences.*$" | xargs -I{} rm -rf {}
 }
 cleanup_workspace() {
   find $PBL_HOME/workspace -maxdepth 1 -mindepth 1 | grep -v .metadata | xargs rm -rf
