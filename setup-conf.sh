@@ -149,6 +149,11 @@ retain_restore tomcat/bin/startup.bat
 _PATH=$(echo $PBL_HOME'/java' | xargs cygpath -w | sed 's|\\|\\\\|g')
 sed -b -i 's|setlocal|setlocal\n\nrem [pbl.zip] Fix JDK paths\nset JAVA_HOME='$_PATH'\nset JRE_HOME='$_PATH'|' tomcat/bin/startup.bat
 
+# デプロイ用のtomcatユーザ追加
+cd $PBL_HOME
+retain_restore tomcat/conf/tomcat-users.xml
+sed -b -i 's|</tomcat-users>|  <user username="tomcat" password="spiral" roles="manager-gui,manager-script,admin-gui" />\n</tomcat-users>|' tomcat/conf/tomcat-users.xml
+
 # anti*Locking
 # - pending
 
@@ -240,6 +245,7 @@ extract_delta $PBL_HOME/eclipse/eclipse.ini
 extract_delta $PBL_HOME/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 extract_delta $PBL_HOME/eclipse/p2/org.eclipse.equinox.p2.engine/profileRegistry/epp.package.jee.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs
 extract_delta $PBL_HOME/tomcat/bin/startup.bat
+extract_delta $PBL_HOME/tomcat/conf/tomcat-users.xml
 extract_delta $PBL_HOME/mongodb/mongod.conf
 extract_delta $PBL_HOME/mongodb/bin/mongod.bat
 extract_delta $PBL_HOME/chrome/Data/profile/Default/Preferences
