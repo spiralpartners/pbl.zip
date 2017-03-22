@@ -14,6 +14,8 @@
 ########################################
 # init
 
+export VERSION="ver 1.3"
+
 export TMP=/d/tmp/
 export PBL_HOME=/c/pbl/
 
@@ -50,6 +52,10 @@ retain_restore() {
   retain $*
   restore $*
 }
+
+#########################################
+# version
+echo $VERSION > $PBL_HOME/version.txt
 
 #########################################
 # JDK
