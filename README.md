@@ -4,9 +4,9 @@
 
 - setup-base.sh
   - pbl.zip生成手順のうち，ベースバイナリの生成手順のスクリプト
+  - 一部，guiによる手作業処理も含まれるており，全自動ではないことに注意
   - 生成結果はこちら
     - http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/pbl-base-v0.1.zip
-  - 一部，guiによる手作業処理も含まれるており，全自動ではないことに注意
 
 - setup-conf.sh
   - ベースバイナリに対して設定を加えるスクリプト
