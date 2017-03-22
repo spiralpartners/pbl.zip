@@ -17,11 +17,17 @@
 ########################################
 # init
 
+export VERSION="ver 0.xxxxxxx"
+
 export TMP=/d/tmp/
 export PBL_HOME=/c/pbl/
 
 unalias cp
 mkdir -p $PBL_HOME
+
+#########################################
+# version
+echo $VERSION > $PBL_HOME/version-base.txt
 
 #########################################
 # JDK
