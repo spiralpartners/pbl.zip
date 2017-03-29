@@ -138,7 +138,7 @@ echo -e 'REMOTE_COMMANDS_VIEW_FONT=1|Consolas|11.25|0|WINDOWS|1|-15|0|0|0|400|0|
 echo -e 'eclipse.preferences.version=1\norg.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart.lastActivePage=1' > org.eclipse.wst.xml.ui.prefs
 _PATH=$(echo $PBL_HOME'/workspace' | xargs cygpath -w | sed 's|\\|\\\\\\|g' | sed 's|:|\\:|')
 echo -e 'core_defaultRepositoryDir='$_PATH > org.eclipse.egit.core.prefs
-wget http://133.1.236.160:30080/remote.php/webdav/Documents/pbl.zip/misc/workbench.xmi -O $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+wget http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/workbench.xmi -O $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 cd $PBL_HOME
 
 #########################################
