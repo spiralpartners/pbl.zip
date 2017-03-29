@@ -80,6 +80,7 @@ if grep -Fq "pleiades.jar" eclipse/eclipse.ini
 fi
 $PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://download.eclipse.org/releases/neon -installIUs org.eclipse.team.svn.feature.group
 $PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://community.polarion.com/projects/subversive/download/eclipse/6.0/neon-site -installIUs org.polarion.eclipse.team.svn.connector.feature.group,org.polarion.eclipse.team.svn.connector.svnkit18.feature.group
+$PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://download.eclipse.org/releases/neon -installIUs org.eclipse.buildship.feature.group
 
 # pleiades有効化
 if grep -Fqv "pleiades.jar" eclipse/eclipse.ini
