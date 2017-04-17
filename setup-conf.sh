@@ -14,7 +14,7 @@
 ########################################
 # init
 
-export VERSION="ver 1.3"
+export VERSION="ver 1.4"
 
 export TMP=/d/tmp/
 export PBL_HOME=/c/pbl/
@@ -40,7 +40,6 @@ retain() {
     fi
   fi
 }
-
 
 # 対象ファイルをorigバックアップから復元
 restore() {
@@ -81,6 +80,7 @@ fi
 $PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://download.eclipse.org/releases/neon -installIUs org.eclipse.team.svn.feature.group
 $PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://community.polarion.com/projects/subversive/download/eclipse/6.0/neon-site -installIUs org.polarion.eclipse.team.svn.connector.feature.group,org.polarion.eclipse.team.svn.connector.svnkit18.feature.group
 $PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://download.eclipse.org/releases/neon -installIUs org.eclipse.buildship.feature.group
+$PBL_HOME/eclipse/eclipse -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository http://update.eclemma.org -installIUs com.mountainminds.eclemma.feature.feature.group
 
 # pleiades有効化
 if grep -Fqv "pleiades.jar" eclipse/eclipse.ini
