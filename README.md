@@ -8,10 +8,13 @@
   - 生成結果はこちら
     - http://133.1.236.160:30080/remote.php/webdav/Documents/pbl.zip/pbl-base-v0.1.zip
 
-- setup-conf.sh
+- setup-config.sh
   - ベースバイナリに対して設定を加えるスクリプト
   - 実行パス（C:\pbl\）の固定や，Eclipseへの設定等が含まれる
   - pbl.zipの肝
+
+- setup-hadoop.sh
+  - hadoopパッケージのインストール手順スクリプト
 
 - delta/
   - setup-confによる設定とデフォルト設定との差分ファイルを保持
