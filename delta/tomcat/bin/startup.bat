@@ -21,8 +21,9 @@ rem ---------------------------------------------------------------------------
 setlocal
 
 rem [pbl.zip] Fix JDK paths
-set JAVA_HOME=C:\pbl\java
-set JRE_HOME=C:\pbl\java
+set "JAVA_HOME=C:\pbl\java"
+set "JRE_HOME=C:\pbl\java"
+set "JAVA_OPTS=%JAVA_OPTS% -Duser.language=en"
 
 rem Guess CATALINA_HOME if not defined
 set "CURRENT_DIR=%cd%"
