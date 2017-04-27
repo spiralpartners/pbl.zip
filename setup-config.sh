@@ -247,6 +247,7 @@ extract_delta() {
 }
 
 rm -rf $DELTA
+extract_delta $PBL_HOME/version.txt
 extract_delta $PBL_HOME/eclipse/eclipse.ini
 extract_delta $PBL_HOME/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 extract_delta $PBL_HOME/eclipse/p2/org.eclipse.equinox.p2.engine/profileRegistry/epp.package.jee.profile/.data/.settings/org.eclipse.equinox.p2.ui.sdk.scheduler.prefs
