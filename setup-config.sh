@@ -14,7 +14,7 @@
 ########################################
 # init
 
-export VERSION="ver 1.5"
+export VERSION="ver 1.7"
 
 export TMP=/d/tmp/
 export PBL_HOME=/c/pbl/
@@ -130,9 +130,10 @@ retain_restore $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.
 retain_restore $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.xml.ui.prefs
 retain_restore $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs
 retain_restore $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.buildship.core.prefs
+retain_restore $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ant.core.prefs
 retain_restore $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 cd $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/
-echo -e 'eclipse.preferences.version=1\nencoding=utf-8\nversion=1' > org.eclipse.core.resources.prefs
+echo -e 'eclipse.preferences.version=1\nencoding=utf-8\nrefresh.enabled=true\nversion=1' > org.eclipse.core.resources.prefs
 echo -e 'eclipse.preferences.version=1\noverviewRuler_migration=migrated_3.1\nspellingEnabled=false\ntextDragAndDropEnabled=false' > org.eclipse.ui.editors.prefs
 echo -e 'EXIT_PROMPT_ON_CLOSE_LAST_WINDOW=false\nIDE_ENCODINGS_PREFERENCE=utf-8\nPROBLEMS_FILTERS_MIGRATE=true\neclipse.preferences.version=1\nplatformState=1485945983339\nquickStart=false\ntipsAndTricks=true' > org.eclipse.ui.ide.prefs
 echo -e 'eclipse.preferences.version=1\nshowIntro=false' > org.eclipse.ui.prefs
@@ -143,8 +144,13 @@ _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
 echo -e 'gradle.user.home='$_PATH'workspace/.gradle' > org.eclipse.buildship.core.prefs
 _PATH=$(echo $PBL_HOME'workspace' | xargs cygpath -w | sed 's|\\|\\\\\\|g' | sed 's|:|\\:|')
 echo -e 'core_defaultRepositoryDir='$_PATH > org.eclipse.egit.core.prefs
+_ANT_HOME=$PBL_HOME/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib
+wget http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/jsch-0.1.54.jar -P $_ANT_HOME/
+_ANT_JARS=$(find $(cd $_ANT_HOME; pwd) -type f | xargs cygpath -w | sed -e 's|\([\\]\)|/|g' | paste -sd ',')
+echo -e 'ant_home_entries='$_ANT_JARS'\neclipse.preferences.version=1' > org.eclipse.ant.core.prefs
 wget http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/workbench.xmi -O $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 cd $PBL_HOME
+
 
 #########################################
 # Tomcat
@@ -264,4 +270,5 @@ extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.s
 extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.xml.ui.prefs
 extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs
 extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.buildship.core.prefs
+extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ant.core.prefs
 extract_delta $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
