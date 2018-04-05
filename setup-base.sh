@@ -17,9 +17,9 @@
 ########################################
 # init
 
-export VERSION="ver 0.xxxxxxx"
+export VERSION="base ver 0.2"
 
-export TMP=/d/tmp/
+export TMP=/d/tmp/pbl/
 export PBL_HOME=/c/pbl/
 
 unalias cp
@@ -27,7 +27,7 @@ mkdir -p $PBL_HOME
 
 #########################################
 # version
-echo $VERSION > $PBL_HOME/version-base.txt
+echo $VERSION > $PBL_HOME/version.txt
 
 #########################################
 # JDK
@@ -35,74 +35,46 @@ echo $VERSION > $PBL_HOME/version-base.txt
 # GUIでのインストール時のJRE：不要
 # GUIでのインストール時のパス：デフォルト（C:\Program Files\Java..）
 cd $TMP
-*gui_wget http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-windows-x64.exe
-*gui_install jdk-8u121-windows.exe
-cp -r /c/Program\ Files/Java/jdk1.8.0_121 $PBL_HOME
-mv -f $PBL_HOME/jdk1.8.0_121 $PBL_HOME/java
+*gui_wget http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-windows-x64.exe
+*gui_install jdk-8u162-windows-x64.exe
+cp -r /c/Program\ Files/Java/jdk1.8.0_162 $PBL_HOME/
+mv -f $PBL_HOME/jdk1.8.0_162 $PBL_HOME/java
 
 
 #########################################
 # Eclipse
 
 cd $TMP
-wget http://mirrors.opencas.org/eclipse/technology/epp/downloads/release/neon/2/eclipse-jee-neon-2-win32-x86_64.zip
-unzip eclipse-jee-neon-2-win32-x86_64.zip
-mv -f eclipse $PBL_HOME/eclipse
+*gui_wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/oxygen/3/eclipse-java-oxygen-3-win32-x86_64.zip
+unzip eclipse-java-oxygen-3-win32-x86_64.zip
+cp -r eclipse $PBL_HOME/eclipse
 
 # Pleiades (日本語化)
 cd $TMP
 wget http://svn.osdn.jp/svnroot/mergedoc/trunk/Pleiades/build/pleiades.zip
-unzip pleiades.zip -d pleiades/
+unzip pleiades-win.zip -d pleiades/
 cp -r pleiades/* $PBL_HOME/eclipse/
-rm -rf pleiades
+rm -rf $PBL_HOME/eclipse/setup/
+rm -rf $PBL_HOME/eclipse/setup.exe.lnk
 
 #########################################
 # Tomcat
 
 cd $TMP
-wget http://ftp.tsukuba.wide.ad.jp/software/apache/tomcat/tomcat-8/v8.5.11/bin/apache-tomcat-8.5.11.zip
-unzip -o apache-tomcat-8.5.11.zip
-mv apache-tomcat-8.5.11 $PBL_HOME/tomcat
-
-
-########################################
-# chrome
-
-# GUIインストール先：$TMP
-cd $TMP
-*gui_wget https://sourceforge.net/projects/portableapps/files/Google%20Chrome%20Portable/GoogleChromePortable64_46.0.2490.86_online.paf.exe/download
-*gui_install GoogleChromePortable64_46.0.2490.86_online.paf.exe
-mv -f GoogleChromePortable64 $PBL_HOME/chrome
+wget http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/tomcat/tomcat-8/v8.5.29/bin/apache-tomcat-8.5.29.zip
+unzip -o apache-tomcat-8.5.29.zip
+cp -r apache-tomcat-8.5.29 $PBL_HOME/
+mv $PBL_HOME/apache-tomcat-8.5.29 $PBL_HOME/tomcat
 
 
 ########################################
 # Mongodb
 
 cd $TMP
-wget http://downloads.mongodb.org/win32/mongodb-win32-x86_64-2008plus-3.4.1.zip
-unzip -o mongodb-win32-x86_64-2008plus-3.4.1.zip
-mv -f mongodb-win32-x86_64-2008plus-3.4.1 $PBL_HOME/
-mv $PBL_HOME/mongodb-win32-x86_64-2008plus-3.4.1 $PBL_HOME/mongodb
-
-
-########################################
-# teraterm
-
-cd $TMP
-gui_wget https://ja.osdn.net/frs/redir.php?m=iij&f=%2Fttssh2%2F66795%2Fteraterm-4.93.zip
-unzip -o teraterm-4.93.zip
-mv -f teraterm-4.93 $PBL_HOME
-mv -f $PBL_HOME/teraterm-4.93 $PBL_HOME/teraterm
-
-
-########################################
-# cURL
-
-cd $TMP
-wget https://dl.uxnr.de/build/curl/curl_winssl_msys2_mingw64_stc/curl-7.52.1/curl-7.52.1.zip
-unzip -o curl-7.52.1.zip
-mkdir -p $PBL_HOME/curl
-mv -f src/curl.exe $PBL_HOME/curl/
+wget http://downloads.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-3.4.14.zip
+unzip mongodb-win32-x86_64-2008plus-ssl-v3.4-latest.zip
+cp -r mongodb-win32-x86_64-2008plus-ssl-3.4.14-29-gb27f7bc476 $PBL_HOME/
+mv $PBL_HOME/mongodb-win32-x86_64-2008plus-ssl-3.4.14-29-gb27f7bc476 $PBL_HOME/mongodb
 
 
 ########################################
@@ -114,6 +86,15 @@ unzip -o rlogin_x64.zip
 mkdir -p $PBL_HOME/rlogin/
 mv -f RLogin.exe $PBL_HOME/rlogin/
 
+
+########################################
+# Git Bash
+
+cd $TMP
+*gui_wget https://github.com/git-for-windows/git/releases/download/v2.16.2.windows.1/PortableGit-2.16.2-64-bit.7z.exe
+*gui_install PortableGit-2.16.2-64-bit.7z.exe
+cp -r PortableGit $PBL_HOME/
+mv $PBL_HOME/PortableGit $PBL_HOME/git-bash
 
 ########################################
 # cleanup

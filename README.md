@@ -5,8 +5,6 @@
 - setup-base.sh
   - pbl.zip生成手順のうち，ベースバイナリの生成手順のスクリプト
   - 一部，guiによる手作業処理も含まれるており，全自動ではないことに注意
-  - 生成結果はこちら
-    - http://133.1.236.160:30080/remote.php/webdav/Documents/pbl.zip/pbl-base-v0.1.zip
 
 - setup-config.sh
   - ベースバイナリに対して設定を加えるスクリプト
@@ -22,35 +20,7 @@
 
 - pbl.zip
   - zip自体は巨大なので本リポジトリとは別のファイルサーバに待避
-  - http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/
-
-
-# Pendings
-### ~~java実行時の候補~~
-- v1.2 (mergedoc→JEE）により解決
-- ~~javaの`static main()`実行時の候補がイマイチ~~
-- ~~サーバ実行とjava実行の両方が出る~~
-- ~~後者だけで十分~~
-- ~~学生が演習時にミスりそう~~
-
-### tomcatユーザーどうする？
-- `tomcat-users.xml`
-- 現在，alpacaでのbuildデプロイ時に以下コマンドを実行している
-  - `cp *.war $PBL_HOME/webapps`
-- tomcat api経由でデプロイすべき
-- そうなるとtomcatユーザが必須
-
-### httpd必要？
-- httpd-tomcatの謎連携をやめたため，今のところ不要
-- 謎連携はtomcatのみで実現可能
-  - `<context path=.. docBase=..>`
-
-### tomcatのanti*Lockingを外したが問題ないか？
-- tomcat/conf/context.xml内
-  - `<Context antiResourceLocking="true" antiJARLocking="true">`
-- 今のところ問題は出ていないが，実際に開発しながら試すべき
-
-
+  - http://133.1.236.160:30080/index.php/apps/files/?dir=/Documents/pbl.zip
 
 
 # What's pbl.zip?
@@ -59,14 +29,11 @@
 
 | Software | version | source | memo |
 |--------|---------|--------|------|
-| JDK | 8u121 | [oracle.com](http://www.oracle.com/technetwork/java/javase/downloads/index.html) | x64 |
-| Eclipse | 4.6.2 Neon 2 | [eclipse.org](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon2) | x64 |
-| Apache Tomcat | 8.5.11 | [apache.org](http://tomcat.apache.org/) | Core → zip |
-| MongoDB | 3.4.1 | [mongodb.com](https://www.mongodb.com/) | w/o SSL support x64 |
+| JDK | 8u162 | [oracle.com](http://www.oracle.com/technetwork/java/javase/downloads/index.html) | x64 |
+| Eclipse | 4.7.0 Oxygen | [eclipse.org](http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/oxygen3) | x64 |
+| Apache Tomcat | 8.5.29 | [apache.org](http://tomcat.apache.org/) | Core → zip |
+| MongoDB | 3.4.14 | [mongodb.com](https://www.mongodb.com/) | w/ SSL support x64 |
 | RLogin | 2.21.3 | [nanno.disp.jp](http://nanno.dip.jp/softlib/man/rlogin/) | x64 |
-| Teraterm | 4.93 | [ttssh2.osdn.jp](http://ttssh2.osdn.jp/) |
-| cURL | 7.52.1 | [haxx.se](https://curl.haxx.se) | x64 |
-| Google Chrome | 46.0.2490.86 | [portableapps](https://sourceforge.net/projects/portableapps/files/Google%20Chrome%20Portable/) | x64 |
 
 
 ### 動作環境
