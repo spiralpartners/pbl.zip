@@ -14,10 +14,11 @@
 ########################################
 # init
 
-export VERSION="conf ver 1.8"
+export VERSION="conf ver 1.9"
 
-export TMP=/d/tmp/
+export TMP=/d/tmp/pbl/
 export PBL_HOME=/c/pbl/
+export USER_HOME=$PBL_HOME'home'
 
 unalias cp
 mkdir -p $PBL_HOME
@@ -178,27 +179,47 @@ echo -e $_PATH'mongodb\\bin\\mongod.exe --config '$_PATH'mongodb\\mongod.conf' >
 ########################################
 # RLogin
 
+
 ########################################
-# git-bash
+# MSYS2
+
+cd $PBL_HOME
 
 # look & feel (minttyrc)
-cd $PBL_HOME
-retain_restore git-bash/etc/minttyrc
-echo -e 'BoldAsFont=yes\nFont=Consolas\nFontHeight=13\nLanguage=ja\nThemeFile=mintty\nCopyAsRTF=no\nRightClickAction=paste' > git-bash/etc/minttyrc
+retain_restore $USER_HOME/.minttyrc
+echo -e 'BoldAsFont=-1\nFont=Consolas\nFontHeight=12\nCopyAsRTF=no\nRightClickAction=paste\n' > $USER_HOME/.minttyrc
 
-# bashのHOME
-mkdir -p home
-retain_restore git-bash/etc/profile.d/bash_profile.sh
-echo -e 'HOME=/c/pbl/home\nHISTFILE=$HOME/.bash_history\ncd /c/pbl/workspace' >> git-bash/etc/profile.d/bash_profile.sh
+# $home
+retain_restore msys64/etc/nsswitch.conf
+sed -E -i 's@(db_home.*)@# \1\ndb_home: '"$USER_HOME"'@' msys64/etc/nsswitch.conf
 
 # git config
-retain_restore home/.gitconfig
-echo -e '[core]\n	quotepath = false\n	editor = notepad\n' > home/.gitconfig
+retain_restore $USER_HOME/.gitconfig
+echo -e '[core]\n	quotepath = false\n	editor = notepad\n' > $USER_HOME/.gitconfig
 
-# wgetの追加
-cd $TMP
-wget https://eternallybored.org/misc/wget/1.19.4/64/wget.exe
-mv -f wget.exe $PBL_HOME/git-bash/mingw64/bin/
+# パッケージ追加 (bash_profileによる強引なインストール．immutabilityのために.bash_profileを一旦退避）
+if [ -f "$USER_HOME/.bash_profile" ]; then
+  cp -f $USER_HOME/.bash_profile $USER_HOME/.bash_profile.bak
+  echo > $USER_HOME/.bash_profile
+fi
+echo -e 'pacman -S --noconfirm openssh' >> $USER_HOME/.bash_profile
+echo -e 'pacman -S --noconfirm vim'     >> $USER_HOME/.bash_profile
+echo -e 'pacman -S --noconfirm git'     >> $USER_HOME/.bash_profile
+echo -e 'exit'                           >> $USER_HOME/.bash_profile
+env -i $PBL_HOME'msys64/msys2.exe'
+sleep 20s
+if [ -f "$USER_HOME/.bash_profile.bak" ]; then
+  cp -f $USER_HOME/.bash_profile.bak $USER_HOME/.bash_profile
+  rm -f $USER_HOME/.bash_profile.bak
+else
+  rm -f $USER_HOME/.bash_profile
+fi
+
+# bash_profile
+retain_restore $USER_HOME/.bash_profile
+echo -e "alias ls='ls --color'" >> $USER_HOME/.bash_profile
+echo -e "alias vi='vim'" >> $USER_HOME/.bash_profile
+
 
 ########################################
 # cleanup
@@ -221,9 +242,6 @@ cleanup_eclipse() {
   rm -rf $PBL_HOME/eclipse/tmp/
   find $PBL_HOME/eclipse/configuration -maxdepth 1 -mindepth 1 -type d | egrep -v ".settings|org.eclipse.equinox.simpleconfigurator|org.eclipse.update" | xargs rm -rf
 }
-cleanup_chrome() {
-  find $PBL_HOME/chrome/Data/profile/ | egrep -v "profile/$|Default$|Default/Preferences.*$" | xargs -I{} rm -rf {}
-}
 cleanup_workspace() {
   find $PBL_HOME/workspace -maxdepth 1 -mindepth 1 | grep -v .metadata | xargs rm -rf
 }
@@ -231,7 +249,6 @@ cleanup() {
   cleanup_mongodb
   cleanup_tomcat
   cleanup_eclipse
-  cleanup_chrome
 }
 
 cleanup

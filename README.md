@@ -31,6 +31,7 @@
 |--------|---------|--------|------|
 | JDK | 8u162 | [oracle.com](http://www.oracle.com/technetwork/java/javase/downloads/index.html) | x64 |
 | Eclipse | 4.7.0 Oxygen | [eclipse.org](http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/oxygen3) | x64 |
+| MSYS2 | 20170918 | [MSYS2](https://www.msys2.org/) | x86_64 (sf.net) |
 | Apache Tomcat | 8.5.29 | [apache.org](http://tomcat.apache.org/) | Core → zip |
 | MongoDB | 3.4.14 | [mongodb.com](https://www.mongodb.com/) | w/ SSL support x64 |
 | RLogin | 2.21.3 | [nanno.disp.jp](http://nanno.dip.jp/softlib/man/rlogin/) | x64 |

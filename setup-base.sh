@@ -17,7 +17,7 @@
 ########################################
 # init
 
-export VERSION="base ver 0.2"
+export VERSION="base ver 0.3"
 
 export TMP=/d/tmp/pbl/
 export PBL_HOME=/c/pbl/
@@ -88,13 +88,13 @@ mv -f RLogin.exe $PBL_HOME/rlogin/
 
 
 ########################################
-# Git Bash
+# MSYS2
 
 cd $TMP
-*gui_wget https://github.com/git-for-windows/git/releases/download/v2.16.2.windows.1/PortableGit-2.16.2-64-bit.7z.exe
-*gui_install PortableGit-2.16.2-64-bit.7z.exe
-cp -r PortableGit $PBL_HOME/
-mv $PBL_HOME/PortableGit $PBL_HOME/git-bash
+*gui_wget https://sourceforge.net/projects/msys2/files/Base/x86_64/msys2-base-x86_64-20170918.tar.xz/download
+tar xvf msys2-base-x86_64-20170918.tar.xz
+cp -r msys64 $PBL_HOME/
+
 
 ########################################
 # cleanup
