@@ -69,8 +69,9 @@ echo $VERSION >> $PBL_HOME/version.txt
 cd $PBL_HOME/
 retain_restore eclipse/eclipse.ini
 _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
+_UPATH=$(cygpath -w $USER_HOME | sed 's|\\|/|g')
 sed -i 's|\(-product\)|-vm\n'$_PATH'java/bin/javaw.exe\n\1|' eclipse/eclipse.ini
-echo -e '-Duser.home='$_PATH'eclipse/tmp' >> eclipse/eclipse.ini
+echo -e '-Duser.home='$_UPATH'' >> eclipse/eclipse.ini
 
 # pleiades有効化
 if grep -Fqv "pleiades.jar" eclipse/eclipse.ini
@@ -134,7 +135,7 @@ echo -e 'REMOTE_COMMANDS_VIEW_FONT=1|Consolas|11.25|0|WINDOWS|1|-15|0|0|0|400|0|
 echo -e 'eclipse.preferences.version=1\norg.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart.lastActivePage=1' > org.eclipse.wst.xml.ui.prefs
 echo -e 'eclipse.preferences.version=1\nnotifications.enabled=false' > org.eclipse.mylyn.commons.notifications.ui.prefs
 _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
-echo -e 'gradle.user.home='$_PATH'home/.gradle' > org.eclipse.buildship.core.prefs
+echo -e 'gradle.user.home='$_UPATH'/.gradle' > org.eclipse.buildship.core.prefs
 _PATH=$(echo $PBL_HOME'workspace' | xargs cygpath -w | sed 's|\\|\\\\\\|g' | sed 's|:|\\:|')
 echo -e 'core_defaultRepositoryDir='$_PATH > org.eclipse.egit.core.prefs
 _ANT_HOME=$PBL_HOME/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib
@@ -239,7 +240,6 @@ cleanup_eclipse() {
   rm -rf $PBL_HOME/eclipse/p2/org.eclipse.equinox.p2.repository
   rm -rf $PBL_HOME/eclipse/p2/pools.info
   rm -rf $PBL_HOME/eclipse/p2/profiles.info
-  rm -rf $PBL_HOME/eclipse/tmp/
   find $PBL_HOME/eclipse/configuration -maxdepth 1 -mindepth 1 -type d | egrep -v ".settings|org.eclipse.equinox.simpleconfigurator|org.eclipse.update" | xargs rm -rf
 }
 cleanup_workspace() {
