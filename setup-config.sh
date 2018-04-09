@@ -139,10 +139,10 @@ echo -e 'gradle.user.home='$_UPATH'/.gradle' > org.eclipse.buildship.core.prefs
 _PATH=$(echo $PBL_HOME'workspace' | xargs cygpath -w | sed 's|\\|\\\\\\|g' | sed 's|:|\\:|')
 echo -e 'core_defaultRepositoryDir='$_PATH > org.eclipse.egit.core.prefs
 _ANT_HOME=$PBL_HOME/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib
-wget http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/jsch-0.1.54.jar -P $_ANT_HOME/
+wget -N http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/jsch-0.1.54.jar -P $_ANT_HOME/
 _ANT_JARS=$(find $(cd $_ANT_HOME; pwd) -type f | xargs cygpath -w | sed -e 's|\([\\]\)|/|g' | paste -sd ',')
 echo -e 'ant_home_entries='$_ANT_JARS'\neclipse.preferences.version=1' > org.eclipse.ant.core.prefs
-wget http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/workbench.xmi -O $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+wget -N http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/workbench.xmi -O $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 cd $PBL_HOME
 
 
