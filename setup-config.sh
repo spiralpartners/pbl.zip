@@ -206,7 +206,7 @@ fi
 echo -e 'pacman -S --noconfirm openssh' >> $USER_HOME/.bash_profile
 echo -e 'pacman -S --noconfirm vim'     >> $USER_HOME/.bash_profile
 echo -e 'pacman -S --noconfirm git'     >> $USER_HOME/.bash_profile
-echo -e 'exit'                           >> $USER_HOME/.bash_profile
+echo -e 'exit'                          >> $USER_HOME/.bash_profile
 env -i $PBL_HOME'msys64/msys2.exe'
 sleep 20s
 if [ -f "$USER_HOME/.bash_profile.bak" ]; then
@@ -216,10 +216,13 @@ else
   rm -f $USER_HOME/.bash_profile
 fi
 
-# bash_profile
+# bash_profile & bashrc
 retain_restore $USER_HOME/.bash_profile
-echo -e "alias ls='ls --color'" >> $USER_HOME/.bash_profile
-echo -e "alias vi='vim'" >> $USER_HOME/.bash_profile
+echo -e "test -r ~/.bashrc && . ~/.bashrc" >> $USER_HOME/.bash_profile
+
+retain_restore $USER_HOME/.bashrc
+echo -e "alias ls='ls --color'" >> $USER_HOME/.bashrc
+echo -e "alias vi='vim'" >> $USER_HOME/.bashrc
 
 
 ########################################
