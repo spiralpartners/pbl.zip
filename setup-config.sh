@@ -271,4 +271,4 @@ extract_delta() {
 }
 export -f extract_delta
 
-find $PBL_HOME -type f | grep '\.orig$' | xargs -i bash -c 'x={}; extract_delta ${x%.*}'
+find $PBL_HOME -type f | grep '\.orig$' | grep -v 'git-completion\.bash\.orig$' | xargs -i bash -c 'x={}; extract_delta ${x%.*}'
