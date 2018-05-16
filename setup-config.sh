@@ -14,7 +14,7 @@
 ########################################
 # init
 
-export VERSION="conf ver 1.9"
+export VERSION="conf ver 1.10"
 
 export TMP=/d/tmp/pbl/
 export PBL_HOME=/c/pbl/
@@ -196,7 +196,7 @@ sed -E -i 's@(db_home.*)@# \1\ndb_home: '"$USER_HOME"'@' msys64/etc/nsswitch.con
 
 # git config
 retain_restore $USER_HOME/.gitconfig
-echo -e '[core]\n	quotepath = false\n	editor = notepad\n' > $USER_HOME/.gitconfig
+echo -e '[core]\n	quotepath = false\n' > $USER_HOME/.gitconfig
 
 # パッケージ追加 (bash_profileによる強引なインストール．immutabilityのために.bash_profileを一旦退避）
 if [ -f "$USER_HOME/.bash_profile" ]; then
