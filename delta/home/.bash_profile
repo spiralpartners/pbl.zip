@@ -1,2 +1,1 @@
-alias ls='ls --color'
-alias vi='vim'
+test -r ~/.bashrc && . ~/.bashrc

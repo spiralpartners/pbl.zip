@@ -14,13 +14,14 @@
 ########################################
 # init
 
-export VERSION="conf ver 1.10"
+export VERSION="conf ver 1.11"
 
 export TMP=/d/tmp/pbl/
 export PBL_HOME=/c/pbl/
 export USER_HOME=$PBL_HOME'home'
+export RESOURCE=$(dirname "$0")/resource
 
-unalias cp
+unalias cp 2>/dev/null
 mkdir -p $PBL_HOME
 
 ########################################
@@ -138,11 +139,15 @@ _PATH=$(cygpath -w $PBL_HOME | sed 's|\\|/|g')
 echo -e 'gradle.user.home='$_UPATH'/.gradle' > org.eclipse.buildship.core.prefs
 _PATH=$(echo $PBL_HOME'workspace' | xargs cygpath -w | sed 's|\\|\\\\\\|g' | sed 's|:|\\:|')
 echo -e 'core_defaultRepositoryDir='$_PATH > org.eclipse.egit.core.prefs
-_ANT_HOME=$PBL_HOME/eclipse/plugins/org.apache.ant_1.9.6.v201510161327/lib
-wget -N http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/jsch-0.1.54.jar -P $_ANT_HOME/
+
+# ant系
+_ANT_HOME=$PBL_HOME/eclipse/plugins/org.apache.ant_1.10.1.v20170504-0840/lib
+cp -f $RESOURCE/jsch-0.1.54.jar  $_ANT_HOME/
 _ANT_JARS=$(find $(cd $_ANT_HOME; pwd) -type f | xargs cygpath -w | sed -e 's|\([\\]\)|/|g' | paste -sd ',')
 echo -e 'ant_home_entries='$_ANT_JARS'\neclipse.preferences.version=1' > org.eclipse.ant.core.prefs
-wget -N http://sdl.ist.osaka-u.ac.jp/~shinsuke/pbl.zip/workbench.xmi -O $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+
+# パースペクティブ等
+cp -f $RESOURCE/workbench.xmi $PBL_HOME/workspace/.metadata/.plugins/org.eclipse.e4.workbench/
 cd $PBL_HOME
 
 
@@ -209,6 +214,7 @@ echo -e 'pacman -S --noconfirm git'     >> $USER_HOME/.bash_profile
 echo -e 'exit'                          >> $USER_HOME/.bash_profile
 env -i $PBL_HOME'msys64/msys2.exe'
 sleep 20s
+
 if [ -f "$USER_HOME/.bash_profile.bak" ]; then
   cp -f $USER_HOME/.bash_profile.bak $USER_HOME/.bash_profile
   rm -f $USER_HOME/.bash_profile.bak
@@ -223,6 +229,9 @@ echo -e "test -r ~/.bashrc && . ~/.bashrc" >> $USER_HOME/.bash_profile
 retain_restore $USER_HOME/.bashrc
 echo -e "alias ls='ls --color'" >> $USER_HOME/.bashrc
 echo -e "alias vi='vim'" >> $USER_HOME/.bashrc
+
+# git profile.d
+cp -f $RESOURCE/git-prompt.sh msys64/etc/profile.d/
 
 
 ########################################
